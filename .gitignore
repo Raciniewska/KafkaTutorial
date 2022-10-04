@@ -1,2 +1,5 @@
 # project inteliJ
 .idea
+
+#OS files
+**/.DS_Store
