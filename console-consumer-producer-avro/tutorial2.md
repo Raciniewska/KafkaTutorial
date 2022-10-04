@@ -1,5 +1,5 @@
 # Tutorial 2 - Console Producer and Consumer with (de)serializers
-
+[source](https://developer.confluent.io/tutorials/kafka-console-consumer-producer-avro/kafka.html)
 ## 1. Get Confluent Platform
 Launch Confluent Platform by running
 ```
