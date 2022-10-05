@@ -1,0 +1,16 @@
+
+FROM confluentinc/cp-ksqldb-server:7.1.0
+ARG cert_owner=kainos
+ARG cert_file_name=kainos-chain.pem
+ARG local_kainos_cert_file_path=${cert_owner}/${cert_file_name}
+ARG container_kainos_cert_file_path=/home/appuser/${cert_file_name}
+ARG certificate_store_pwd=changeit
+ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
+USER root
+# If you expect to logon to this container and install additional packages, uncomment the line below
+# to allow Yum to download packages without SSL checking for any repository.
+# But, be warned, do this at your peril as this is unsafe.
+#RUN echo "sslverify=false" >> /etc/yum.conf
+COPY --chmod=0755 "${local_kainos_cert_file_path}" "${container_kainos_cert_file_path}"
+RUN keytool -importcert -noprompt -alias ${cert_owner} -file "${container_kainos_cert_file_path}" -storepass ${certificate_store_pwd} -cacerts
+USER appuser 
